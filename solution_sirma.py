@@ -27,8 +27,8 @@ def _check_overlapping_times(dates_1, dates_2):
             r2 = range_(start=d2_start, end=d2_end)
             latest_start = max(r1.start, r2.start)
             earliest_end = min(r1.end, r2.end)
-            total_overlap += (earliest_end - latest_start).days + 1
-    return max(0, total_overlap)
+            total_overlap += max(0, (earliest_end - latest_start).days + 1)
+    return total_overlap
 
 def _detect_longestteam_mates(filepath):
     employee_struct = {}
@@ -36,7 +36,7 @@ def _detect_longestteam_mates(filepath):
         with open(filepath, 'rb') as csvfile:
             csv_reader = csv.reader(csvfile, skipinitialspace=True)
             for row in csv_reader:
-                # catchg errors due to empty row in the file
+                # catch errors due to empty row in the file
                 try:
                     emp_id, proj_id, start, end = row
                 except ValueError:
@@ -45,12 +45,12 @@ def _detect_longestteam_mates(filepath):
                 end = _convert_to_datetime_object(end)
                 if emp_id not in employee_struct:
                        # @TODO check case where employee has been working mutiple times on same project
-                    employee_struct[emp_id] = {proj_id: [(start, end)], 'teammates':{}}
+                    employee_struct[emp_id]= {'projects':{proj_id: [(start, end)]}, 'teammates':{}}
                 else:
-                    if proj_id not in employee_struct[emp_id]:
-                        employee_struct[emp_id][proj_id] = [(start, end)]
+                    if proj_id not in employee_struct[emp_id]['projects']:
+                        employee_struct[emp_id]['projects'][proj_id] = [(start, end)]
                     else:
-                        employee_struct[emp_id][proj_id].append((start, end))
+                        employee_struct[emp_id]['projects'][proj_id].append((start, end))
 
     except (TypeError, IOError):
         print "Error opening file path '{}'".format(filepath)
@@ -59,27 +59,19 @@ def _detect_longestteam_mates(filepath):
     for emp_index, emp1 in enumerate(employee_list):
         for emp2 in employee_list[emp_index + 1:]:
             if emp1 != emp2:
-                for proj in emp1:
+                for proj in employee_struct[emp1]['projects']:
                     # @TODO add condition to check for overlapping dates
-                    if proj in emp2:
-                        overlap = _check_overlapping_times(employee_struct[emp1][proj_id], employee_struct[emp2][proj_id])
+                    if proj in employee_struct[emp2]['projects']:
+                        overlap = _check_overlapping_times(employee_struct[emp1]['projects'][proj],
+                                                           employee_struct[emp2]['projects'][proj])
                         if overlap > 0:
                             if not emp2 in employee_struct[emp1]['teammates']:
                                 employee_struct[emp1]['teammates'][emp2] = overlap
                             else:
                                 employee_struct[emp1]['teammates'][emp2] += overlap
-                            print emp1 + ': ',  employee_struct[emp1]
+                            #print emp1 + ': ',  employee_struct[emp1]
+    #print employee_struct
     return  employee_struct
-'''
-    for emp1 in employee_struct.keys():
-        for emp2 in employee_struct.keys():
-            if emp1 != emp2:
-                for proj in emp1:
-                    # @TODO add condition to check for overlapping dates
-                    if proj in emp2:
-                        print "======================================="
-                        print emp1 + ': ',  employee_struct[emp1], emp2 + ': ' ,employee_struct[emp2]
-'''
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description = 'Provide path to file')

@@ -74,14 +74,31 @@ class TestSolution(unittest.TestCase):
         expected_overlap = 62
         self.assertEqual(expected_overlap, solution_sirma._check_overlapping_times([dates_emp1], [dates_emp2]))
 
+    def test_check_overlapping_times_overlap_interval_contains_mutiple_dates(self):
+        interval1_start = datetime.strptime('2009-01-01', '%Y-%m-%d')
+        interval1_end = datetime.strptime('2011-04-01', '%Y-%m-%d')
+        interval2_start1 = datetime.strptime('2011-03-01', '%Y-%m-%d')
+        interval2_end1 = datetime.strptime('2011-04-27', '%Y-%m-%d')
+        interval2_start2 = datetime.strptime('2014-01-01', '%Y-%m-%d')
+        interval2_end2 = datetime.strptime('2015-04-27', '%Y-%m-%d')
+        dates_emp1 = [(interval1_start, interval1_end)]
+        dates_emp2 = [(interval2_start1, interval2_end1), (interval2_start2, interval2_end2)]
+        expected_overlap = 32
+        self.assertEqual(expected_overlap, solution_sirma._check_overlapping_times(dates_emp1, dates_emp2))
+
     def test_detect_longest_team_mates_working_more_than_once_on_same_project(self):
         interval1_start = datetime.strptime('2009-01-01', '%Y-%m-%d')
         interval1_end = datetime.strptime('2011-04-27', '%Y-%m-%d')
         interval2_start = datetime.strptime('2014-01-01', '%Y-%m-%d')
         interval2_end = datetime.strptime('2015-04-27', '%Y-%m-%d')
-        output = solution_sirma._detect_longestteam_mates('pm_table.csv')['100']['10']
+        output = solution_sirma._detect_longestteam_mates('pm_table.csv')['100']['projects']['10']
         expected_intervals = [(interval1_start, interval1_end), (interval2_start, interval2_end)]
         self.assertEqual(expected_intervals, output)
+
+    def test_detect_longest_team_mates_mutiple_teammates(self):
+        output = solution_sirma._detect_longestteam_mates('pm_table.csv')['100']['teammates']
+        expected_teammates =  {'143': 847, '218': 482}
+        self.assertEqual(expected_teammates, output)
 
 if __name__ == '__main__':
     unittest.main()
