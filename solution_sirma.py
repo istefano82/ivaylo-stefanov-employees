@@ -32,6 +32,7 @@ def _check_overlapping_times(dates_1, dates_2):
 
 def _detect_longestteam_mates(filepath):
     employee_struct = {}
+    longest_teammates = {'days': 0, 'employees': ['', '']}
     try:
         with open(filepath, 'rb') as csvfile:
             csv_reader = csv.reader(csvfile, skipinitialspace=True)
@@ -70,9 +71,12 @@ def _detect_longestteam_mates(filepath):
                             else:
                                 employee_struct[emp1]['teammates'][emp2] += overlap
                             #print emp1 + ': ',  employee_struct[emp1]
-    #print employee_struct
+                            if overlap > longest_teammates['days']:
+                                longest_teammates['days'] = overlap
+                                longest_teammates['employees'] = [emp1, emp2]
+    print longest_teammates
     return  employee_struct
-
+    
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description = 'Provide path to file')
     parser.add_argument('-f', type=str, help='Provide path to file')
