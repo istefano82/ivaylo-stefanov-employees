@@ -80,7 +80,6 @@ class TestSolution(unittest.TestCase):
         interval2_start = datetime.strptime('2014-01-01', '%Y-%m-%d')
         interval2_end = datetime.strptime('2015-04-27', '%Y-%m-%d')
         output = solution_sirma._detect_longestteam_mates('pm_table.csv')['100']['10']
-        interval1 = datetime.strptime('2012-10-01', '%Y-%m-%d')
         expected_intervals = [(interval1_start, interval1_end), (interval2_start, interval2_end)]
         self.assertEqual(expected_intervals, output)
 
