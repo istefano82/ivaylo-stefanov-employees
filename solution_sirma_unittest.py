@@ -91,14 +91,17 @@ class TestSolution(unittest.TestCase):
         interval1_end = datetime.strptime('2011-04-27', '%Y-%m-%d')
         interval2_start = datetime.strptime('2014-01-01', '%Y-%m-%d')
         interval2_end = datetime.strptime('2015-04-27', '%Y-%m-%d')
-        output = solution_sirma._detect_longestteam_mates('pm_table.csv')['100']['projects']['10']
+        employee_struct, longest_teammates = solution_sirma._detect_longestteam_mates('pm_table.csv')
         expected_intervals = [(interval1_start, interval1_end), (interval2_start, interval2_end)]
-        self.assertEqual(expected_intervals, output)
+        expected_teammates = {'days': 879, 'employees': ['100', '143']}
+        self.assertEqual(expected_intervals, employee_struct['100']['projects']['10'])
+        self.assertEqual(expected_teammates, longest_teammates)
 
     def test_detect_longest_team_mates_mutiple_teammates(self):
-        output = solution_sirma._detect_longestteam_mates('pm_table.csv')['100']['teammates']
-        expected_teammates =  {'143': 847, '218': 482}
-        self.assertEqual(expected_teammates, output)
+        employee_struct, _ = solution_sirma._detect_longestteam_mates('pm_table.csv')
+        expected_teammates =  {'143': 879, '218': 482}
+        self.assertEqual(expected_teammates, employee_struct['100']['teammates'])
+
 
 if __name__ == '__main__':
     unittest.main()
