@@ -115,7 +115,7 @@ class TestSolution(unittest.TestCase):
         interval1_end = datetime.strptime('2011-04-27', '%Y-%m-%d')
         interval2_start = datetime.strptime('2014-01-01', '%Y-%m-%d')
         interval2_end = datetime.strptime('2015-04-27', '%Y-%m-%d')
-        employee_struct, longest_teammates = solution_sirma._detect_longest_team_mates(employee_struct)
+        employee_struct, longest_teammates = solution_sirma.detect_longest_team_mates(employee_struct)
         expected_intervals = [(interval1_start, interval1_end), (interval2_start, interval2_end)]
         expected_teammates = {'days': 879, 'employees': ['100', '143']}
         self.assertEqual(expected_intervals, employee_struct['100']['projects']['10'])
@@ -132,7 +132,7 @@ class TestSolution(unittest.TestCase):
                            '218': {'teammates': {},
                                    'projects': {'10': [(datetime(2012, 5, 16, 0, 0), datetime(2018, 8, 12, 12, 35, 0,
                                                                                               313337))]}}}
-        employee_struct, _ = solution_sirma._detect_longest_team_mates(employee_struct)
+        employee_struct, _ = solution_sirma.detect_longest_team_mates(employee_struct)
         expected_teammates = {'143': 879, '218': 482}
         self.assertEqual(expected_teammates, employee_struct['100']['teammates'])
 
@@ -151,7 +151,7 @@ class TestSolution(unittest.TestCase):
             '143': {'teammates': {}, 'projects': {'10': [(datetime(2011, 3, 27, 0, 0), datetime(2011, 4, 27, 0, 0)),
                                                          (datetime(2009, 1, 1, 0, 0), datetime(2011, 4, 27, 0, 0))],
                                                   '12': [(datetime(2013, 11, 1, 0, 0), datetime(2014, 1, 5, 0, 0))]}}}
-        self.assertEqual(expected_employee_struct, solution_sirma._parse_file(f_path))
+        self.assertEqual(expected_employee_struct, solution_sirma.parse_file(f_path))
         os.remove(f_path)
 
     def test_main_prints_longest_teammates_to_the_console(self):

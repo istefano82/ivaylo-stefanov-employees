@@ -56,7 +56,7 @@ def _calculate_overlapping_times(dates_1, dates_2):
     return total_overlap
 
 
-def _parse_file(filepath):
+def parse_file(filepath):
     """Parses csv type file and returns parsed contents in a form suitable for further processing.
 
     File is having the following format: EmpID, ProjectID, DateFrom, DateTo
@@ -89,10 +89,10 @@ def _parse_file(filepath):
     return employee_struct
 
 
-def _detect_longest_team_mates(struct):
+def detect_longest_team_mates(struct):
     """Find the pair of employees that worked together the most on the same projects.
 
-    :param struct: Dictionary returned from _parse_file function
+    :param struct: Dictionary returned from parse_file function
     :return employee_struct: Modified employee structure containing 'teammates' key for every employee
     :return  longest_teammates: Dictionary containing the pair of employees that worked together the most and total
                                 duration
@@ -112,8 +112,8 @@ def _detect_longest_team_mates(struct):
                                 employee_struct[emp1]['teammates'][emp2] = overlap
                             else:
                                 employee_struct[emp1]['teammates'][emp2] += overlap
-                            if overlap > longest_teammates['days']:
-                                longest_teammates['days'] = overlap
+                            if employee_struct[emp1]['teammates'][emp2] > longest_teammates['days']:
+                                longest_teammates['days'] = employee_struct[emp1]['teammates'][emp2]
                                 longest_teammates['employees'] = [emp1, emp2]
     return employee_struct, longest_teammates
 
@@ -124,8 +124,8 @@ def main(filepath):
     :param filepath: Path to input file
     :return: 0 if execution successful
     """
-    struct = _parse_file(filepath)
-    _, longest_teammates = _detect_longest_team_mates(struct)
+    struct = parse_file(filepath)
+    _, longest_teammates = detect_longest_team_mates(struct)
     print ("The pair of employees working together the most are "
            "'{}','{}', for total of '{}' days.").format(longest_teammates['employees'][0],
                                                         longest_teammates['employees'][1],
