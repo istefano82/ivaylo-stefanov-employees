@@ -1,16 +1,14 @@
-from Tkinter import *
 import tkFileDialog
+from Tkinter import *
 
 import solution_sirma
 
-root = Tk()
 
-height = 5
-width = 4
+def display_common_teammates_parameters():
+    """Callback to display "Employee ID #1", "Employee ID #2", "Project ID", "Days worked" of the longest teammates.
 
-column_names = ["Employee ID #1", "Employee ID #2", "Project ID", "Days worked"]
-
-def select_file():
+    :return:
+    """
     filepath = tkFileDialog.askopenfilename()
     struct = solution_sirma.parse_file(filepath)
     employee_struct, longest_teammates = solution_sirma.detect_longest_team_mates(struct)
@@ -23,16 +21,22 @@ def select_file():
             cell.grid(row=index_row, column=index_col)
 
 
+def prepare_ui(master):
+    """Prepare grid-table UI with button for selecting file.
 
-for index, name in enumerate(column_names):
-    cell = Label(root, text=name, relief=RAISED, width=20)
-    cell.grid(row=0, column=index)
+    Used to display the pair of employees working together the most, their common projects and duration.
+    :param master: Root window
+    :return: None
+    """
+    column_names = ["Employee ID #1", "Employee ID #2", "Project ID", "Days worked"]
+    button = Button(master, text='Select File', command=display_common_teammates_parameters)
+    button.grid(row=6, column=1)
+    for index, name in enumerate(column_names):
+        cell = Label(root, text=name, relief=RAISED, width=20)
+        cell.grid(row=0, column=index)
 
 
-
-button = Button(root, text='Select File', command=select_file)
-button.grid(row=6, column=1)
-
-
-
-mainloop()
+if __name__ == "__main__":
+    root = Tk()
+    prepare_ui(root)
+    root.mainloop()
