@@ -9,4 +9,4 @@ How to use:
 3. Execute:</br>
   % python solution_sirma.py -f <path to file></br>
 Assert following is printed in the console:</br>
-  "The pair of employees working together the most are <employee_1>, <employee_2>, for total of <num days>."
+  "The pair of employees working together the most are <employee_1>, <employee_2>, for total of <num_days>."
