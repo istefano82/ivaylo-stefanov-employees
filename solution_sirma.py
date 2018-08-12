@@ -71,11 +71,17 @@ def _detect_longestteam_mates(filepath):
                             if overlap > longest_teammates['days']:
                                 longest_teammates['days'] = overlap
                                 longest_teammates['employees'] = [emp1, emp2]
-    print longest_teammates
     return  employee_struct, longest_teammates
-    
+
+def main(filepath):
+    employee_struct, longest_teammates = _detect_longestteam_mates(filepath)
+    print ("The pair of employees working together the most are "
+        "'{}','{}', for total of '{}' days.").format(longest_teammates['employees'][0],
+                                                     longest_teammates['employees'][1],
+                                                     longest_teammates['days'])
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description = 'Provide path to file')
     parser.add_argument('-f', type=str, help='Provide path to file')
     args = parser.parse_args()
-    _detect_longestteam_mates(args.f)
+    main(args.f)

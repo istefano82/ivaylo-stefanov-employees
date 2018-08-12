@@ -1,6 +1,7 @@
 from collections import namedtuple
 from datetime import datetime
 import solution_sirma
+import subprocess
 import unittest
 
 
@@ -102,6 +103,11 @@ class TestSolution(unittest.TestCase):
         expected_teammates =  {'143': 879, '218': 482}
         self.assertEqual(expected_teammates, employee_struct['100']['teammates'])
 
+    def test_main_prints_longest_teammates_to_the_console(self):
+        expected = "The pair of employees working together the most are '100','143', for total of '879' days.\n"
+        command = 'python solution_sirma.py -f pm_table.csv'
+        output = subprocess.check_output(command, shell=True)
+        self.assertEqual(expected, output)
 
 if __name__ == '__main__':
     unittest.main()

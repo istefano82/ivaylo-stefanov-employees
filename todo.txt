@@ -1,6 +1,6 @@
 TODO
 
-1. Test print to console with Mock unittest:
+4. Test main function prints to console with subprocess: - DONE
 2. Split _detect_longestteam_mates in to two functions 
 	2.1 One to parse file
 	2.2 One to calculate pair of longest working employees
