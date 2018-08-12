@@ -1,9 +1,9 @@
 TODO
 
 4. Test main function prints to console with subprocess: - DONE
-2. Split _detect_longestteam_mates in to two functions 
-	2.1 One to parse file
-	2.2 One to calculate pair of longest working employees
+2. Split _detect_longestteam_mates in to two functions -DONE
+	2.1 One to parse file - Done
+	2.2 One to calculate pair of longest working employees - Done
 
-4. Upload to git
+4. Upload to git - DONE
 3. Refactor code with Pycharm
