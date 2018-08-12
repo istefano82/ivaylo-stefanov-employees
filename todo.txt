@@ -1,0 +1,9 @@
+TODO
+
+1. Test print to console with Mock unittest:
+2. Split _detect_longestteam_mates in to two functions 
+	2.1 One to parse file
+	2.2 One to calculate pair of longest working employees
+
+4. Upload to git
+3. Refactor code with Pycharm
