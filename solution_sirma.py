@@ -1,9 +1,9 @@
-'''
+"""
 Script that find the pair of employees working the most on the same projects.
 
 Takes CSV file in the following format: "EmpID, ProjectID, DateFrom, DateTo" as input and prints the result
 to the console.
-'''
+"""
 
 
 import argparse
@@ -134,6 +134,7 @@ def get_teammates_projects_and_work_duration(emp1, emp2, employee_struct):
             if overlap > 0:
                 result[proj] = overlap
     return result
+
 
 def main(filepath):
     """Main function orchestrating the finding the pair of employees working together and printing it to stdout.

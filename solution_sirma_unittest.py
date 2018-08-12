@@ -178,5 +178,6 @@ class TestSolution(unittest.TestCase):
         expected = {'10': 879, '15': 32}
         self.assertEqual(expected, result)
 
+
 if __name__ == '__main__':
     unittest.main()
