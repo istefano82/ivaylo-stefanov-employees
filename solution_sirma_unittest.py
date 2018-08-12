@@ -155,11 +155,28 @@ class TestSolution(unittest.TestCase):
         os.remove(f_path)
 
     def test_main_prints_longest_teammates_to_the_console(self):
-        expected = "The pair of employees working together the most are '100','143', for total of '879' days.\n"
+        expected = "The pair of employees working together the most are '100','143', for total of '911' days.\n"
         command = 'python solution_sirma.py -f pm_table.csv'
         output = subprocess.check_output(command, shell=True)
         self.assertEqual(expected, output)
 
+    def test_get_teammates_projects_and_work_duration(self):
+        employee_struct = {'100': {'teammates': {},
+                                   'projects': {'10': [(datetime(2009, 1, 1, 0, 0), datetime(2011, 4, 27, 0, 0)),
+                                                       (datetime(2014, 1, 1, 0, 0), datetime(2015, 4, 27, 0, 0))],
+                                                '15': [(datetime(2009, 1, 1, 0, 0), datetime(2009, 2, 1, 0, 0))]}},
+                           '143': {'teammates': {},
+                                   'projects': {'10': [(datetime(2011, 3, 27, 0, 0), datetime(2011, 4, 27, 0, 0)),
+                                                       (datetime(2009, 1, 1, 0, 0), datetime(2011, 4, 27, 0, 0))],
+                                                '15': [(datetime(2009, 1, 1, 0, 0), datetime(2009, 2, 1, 0, 0))]}},
+                           '218': {'teammates': {},
+                                   'projects': {'10': [(datetime(2012, 5, 16, 0, 0), datetime(2018, 8, 12, 12, 35, 0,
+                                                                                              313337))]}}}
+        emp1 = '100'
+        emp2 = '143'
+        result = solution_sirma.get_teammates_projects_and_work_duration(emp1, emp2, employee_struct)
+        expected = {'10': 879, '15': 32}
+        self.assertEqual(expected, result)
 
 if __name__ == '__main__':
     unittest.main()

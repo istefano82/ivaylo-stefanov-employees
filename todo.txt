@@ -1,11 +1,1 @@
-TODO
-
-4. Test main function prints to console with subprocess: - DONE
-2. Split _detect_longest_team_mates in to two functions -DONE
-	2.1 One to parse file - Done
-	2.2 One to calculate pair of longest working employees - Done
-
-4. Upload to git - DONE
-3. Refactor code with Pycharm - Done
-
-5. Implement support for all date formats
+All done

@@ -118,6 +118,23 @@ def detect_longest_team_mates(struct):
     return employee_struct, longest_teammates
 
 
+def get_teammates_projects_and_work_duration(emp1, emp2, employee_struct):
+    """Extract common projects for two employees and the duration they worked in each for.
+
+    :param emp1: employee id string
+    :param emp2: employee id string
+    :param employee_struct: struct computed from detect_longest_team_mates
+    :return: dictionary containing projects employees worked together  and the duration they worked for
+    """
+    result = {}
+    for proj in employee_struct[emp1]['projects']:
+        if proj in employee_struct[emp2]['projects']:
+            overlap = _calculate_overlapping_times(employee_struct[emp1]['projects'][proj],
+                                                   employee_struct[emp2]['projects'][proj])
+            if overlap > 0:
+                result[proj] = overlap
+    return result
+
 def main(filepath):
     """Main function orchestrating the finding the pair of employees working together and printing it to stdout.
 
