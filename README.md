@@ -3,6 +3,9 @@
 Write an application that takes a text file with EmpID, ProjectID, DateFrom, DateTo columns,
 That finds and prints the pair of employees working together the most on the same projects.
 
+Requirements:
+Python version 2.7
+
 How to use via command line:
 1. Clone the repository - https://github.com/istefano82/ivaylo-stefanov-employees
 2. Navigate to the directory where the project is cloned
